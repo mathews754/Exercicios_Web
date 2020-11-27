@@ -1,0 +1,73 @@
+<template>
+  <div id="app">
+    <h1>Consumindo a API</h1>
+    <button v-on:click="teste">Carregar</button>
+    <table>
+      <thead id="table-columns">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Nascimento</th>
+        </tr>
+      </thead>
+      <tbody id="table-data" v-for="user in usuarios" v-bind:key="user">
+        <td>{{user.nome}}</td>
+        <td>{{user.data_nasc}}</td>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+
+<script>
+// import Vue from 'vue';
+import axios from 'axios';
+const api = axios.create({
+  baseURL: "http://localhost:5000",
+});
+
+// new Vue({
+//   el: "table-data",
+//   data: {
+//     usuarios: [
+//       {id: 1, nome: "Matheus", data_nasc: "29-05-1998" }
+//       ],
+//   },
+//   methods: {
+//     async teste(){
+//       console.log("Hmmm...");
+//       const users = await api.get("/");
+//       for (const user of users.data){
+//         this.usuarios.push({ nome: user.data.user_name, data_nasc: user.data.user_birthday });
+//       }
+//       // this.usuarios = users.data
+//       console.log(users.data);
+//       console.log(this.usuarios);
+//     }
+//   }
+// })
+
+export default {
+  name: 'App',
+  el: '#app',
+  data: function() {
+    return {
+    usuarios: [],
+  }},
+  methods: {
+    async teste(){
+      console.log("Hmmm...");
+      const users = await api.get("/");
+      for (const user of users.data){
+        this.usuarios.push({ nome: user.data.user_name, data_nasc: user.data.user_birthday });
+      }
+      // this.usuarios = users.data
+      console.log(users.data);
+      console.log(this.usuarios);
+    }
+  }
+}
+</script>
+
+<style>
+</style>
